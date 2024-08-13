@@ -1,0 +1,109 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}CART{% endblock %}
+{% block content %}
+
+<section class="container">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div>
+                    <table class="table table-borderless">
+                        <thead>
+                          <tr>
+                            <th scope="col">Preview</th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Toppings</th>
+                            <th scope="col">Total</th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        {% if cart_items %}
+                        <tbody>
+                        <form action="{% url 'cart' %}" method="post">
+                        {% csrf_token %}
+                        {% for cart_item in cart_items %}
+                          <tr>
+                            <th scope="row"><a href="#"><img class="img-fluid" style="width: 50px; height: 50px;" src="{{cart_item.product.photo.url}}" alt=""></a></th>
+                            <td><a href="{% url "product" cart_item.product.pk %}" class="text-primary fw-bold">{{cart_item.product.name}}</a></td>
+                            <td>{{cart_item.product.price}}</td>
+                            <td><input class="btn" type="number" name="quantity_{{cart_item.id}}" value="{{cart_item.quantity}}" style="width: 50px;" id="cart_item_quantity"></td>
+                            <td><ol>{% for topping in cart_item.toppings.all %}<li>{{topping.name}}</li>{% endfor %}</ol></td>
+                            <td>{{cart_item.total_price}}</td>
+                            <td><button type="submit" name="remove_item" value="{{cart_item.id}}"><i class="bi bi-x-lg"></i></button></td>
+                          </tr>
+                          {% endfor %}
+                          <tr>
+                            <td colspan="3" class="align-middle"><div class="text-bold fs-3">Coupon Code</div></td>
+                            <td><input style="border: 0; width: 100%; height: 50px;" type="text" name="coupon_code" id="coupon"></td>
+                            <td><div class="text-bold text-dark fs-3">Total</div></td>
+                            <td><div class="text-bold text-dark">{{cart.grand_total}}</div></td>
+                            <td><button type="submit" class="btn btn-primary">Update Cart</button></td>
+                          </tr>
+                        </form>
+                        </tbody>
+                        {% else %}
+                        <tbody>
+                          <tr>
+                            <td colspan="7">You have nothing in your cart. <a href="{% url "index" %}">Click here</a> to start shopping now!</td>
+                          </tr>
+                        </tbody>
+                        {% endif %}
+                      </table>
+                </div>
+            </div>
+            <div class="col-lg-12 mt-5">
+              <div class="row">
+                <div class="col align-self-start"><a href="{% url "index" %}" class="btn btn-primary">CONTINUE SHOPPING</a></div>
+                <div class="col align-self-end">
+                  <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#placeorder">
+                    Place the order
+                  </button>
+                  <div class="modal fade" id="placeorder" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h5 class="modal-title">Packaging note.</h5>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          <form action="#" method="post">
+                            {% csrf_token %}
+                            <textarea class="form-control" style="height: 100px" name="package_note" id="packagenote" placeholder="Add a note of how you want your product to be packaged."></textarea>
+                            <input type="text" name="order_placed" hidden value="True">
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary">Save changes</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function decrementQuantity() {
+        var quantityInput = document.getElementById("cart_item_quantity");
+        var currentQuantity = parseInt(quantityInput.value);
+        
+        if (currentQuantity > 1) {
+          quantityInput.value = currentQuantity - 1;
+        }
+      }
+      
+      function incrementQuantity() {
+        var quantityInput = document.getElementById("cart_item_quantity");
+        var currentQuantity = parseInt(quantityInput.value);
+        
+        quantityInput.value = currentQuantity + 1;
+      }
+</script>
+
+{% endblock %}
