@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+from django.contrib.messages import constants as message_constants
 
 from pathlib import Path
 import os
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-*+be%axf7^0@w90m_id69^gj@(a(46egr9gvic_05b=h0vvcib
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.15.64.46']
+ALLOWED_HOSTS = ['10.15.64.70']
 
 
 # Application definition
@@ -132,3 +133,12 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Custom tags for messages.
+MESSAGE_TAGS = {
+    message_constants.DEBUG: "secondary",
+    message_constants.INFO: "info",
+    message_constants.SUCCESS: "success",
+    message_constants.WARNING: "warning",
+    message_constants.ERROR: "danger",
+}

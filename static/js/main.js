@@ -335,3 +335,16 @@
   }
 
 })();
+
+document.addEventListener('DOMContentLoaded', (event) => {
+  const alerts = document.querySelectorAll('.alert');
+  alerts.forEach((alert) => {
+    setTimeout(() => {
+      alert.classList.remove('show');
+      alert.classList.add('fade');
+      setTimeout(() => {
+        alert.style.display = 'none';
+      }, 150);
+    }, 5000);
+  });
+});

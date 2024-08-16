@@ -1,12 +1,12 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from PIL import Image
 from django.core.exceptions import ValidationError
-from io import BytesIO
 from django.core.files.base import ContentFile
 from django.utils.translation import gettext_lazy as _
-from phonenumber_field.modelfields import PhoneNumberField
+
 from PIL import Image
+from io import BytesIO
+from phonenumber_field.modelfields import PhoneNumberField
 
 UserModel = get_user_model()
 

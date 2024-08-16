@@ -1,0 +1,28 @@
+{% extends "core/base.html" %}
+{% load static %}
+{% block title %}Notifications{% endblock %}
+{% block content %}
+
+<section class="container">
+    <div class="row">
+        <div class="col-lg-4">
+            {% for item in notification.items.all %}
+            {% if item %}
+            <div class="list-group">
+                <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{item.title}}</h5>
+                    <small>{{item.created_on}}</small>
+                  </div>
+                  <p class="mb-1">{{item.shortened_message}}</p>
+                </a>
+              </div>
+            {% else %}
+            <h2>You have no notifications to show<h2>
+            {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{% endblock %}
