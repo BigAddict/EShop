@@ -1,6 +1,7 @@
 from django.http import HttpRequest
 
 from .models import Cart, CartItem
+from ESmokies.utils import get_notification
 
 def custom_processor(request: HttpRequest) -> dict:
     context = {}
@@ -21,4 +22,5 @@ def custom_processor(request: HttpRequest) -> dict:
     context['cart'] = cart
     context['cart_item_count'] = CartItem.objects.filter(cart=cart).count()
     context['cart_items'] = CartItem.objects.filter(cart=cart)
+    context['notification'] = get_notification(request)
     return context

@@ -78,25 +78,25 @@
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
-            <span class="badge bg-primary badge-number">0</span>
+            <span class="badge bg-primary badge-number">{{ notification.items.count }}</span>
           </a><!-- End Notification Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
             <li class="dropdown-header">
-              You have {{ notification_item_count }} new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+              You have {{ notification.items.count }} new notifications
+              <a href="{% url "notification" %}"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             </li>
             <li>
               <hr class="dropdown-divider">
             </li>
 
-            {% for notification in notification_item %}
+            {% for item in notification.items.all %}
             <li class="notification-item">
               <i class="bi {{ notification.tag }}"></i>
               <div>
-                <h4>{{ notification.title }}</h4>
-                <p>{{ notification.message }}</p>
-                <p>sent on {{ notification.timestamp }}</p>
+                <h4>{{ item.title }}</h4>
+                <p>{{ item.shortened_message }}</p>
+                <p>sent on {{ item.created_on }}</p>
               </div>
             </li>
 
@@ -105,7 +105,7 @@
             </li>
             {% endfor %}
             <li class="dropdown-footer">
-              <a href="#">Show all notifications</a>
+              <a href="{% url "notification" %}">Show all notifications</a>
             </li>
 
           </ul><!-- End Notification Dropdown Items -->

@@ -1,4 +1,5 @@
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from django.core.files.base import ContentFile
@@ -38,4 +39,14 @@ class NotificationItem(models.Model):
         verbose_name_plural = _("NotificationItems")
 
     def __str__(self):
-        return f"{self.tag.title} notification for {self.notification.user.username if self.user else self.notification.session_key}"
+        return f"{self.tag.title} notification for {self.notification.user.username if self.notification.user else self.notification.session_key}"
+
+class UserMessage(models.Model):
+    name = models.CharField(_("Name"), max_length=100)
+    email= models.EmailField(_("Email"), max_length=254)
+    subject = models.CharField(_("Subject"), max_length=500)
+    phone_number = PhoneNumberField(region="KE")
+    message = models.TextField(_("Message"))
+    
+    def __str__(self) -> str:
+        return f"{self.email}'s message."

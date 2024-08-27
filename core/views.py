@@ -4,6 +4,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 
 from .models import Product, Topping, Cart, CartItem, Order, OrderItem
+from ESmokies.utils import add_notification_item
 
 class IndexTemplateView(TemplateView):
     template_name = "core/index.html"
@@ -136,6 +137,7 @@ class CartTemplateView(TemplateView):
                     order_item.toppings.add(topping)
                 order_item.save()
                 cart_item.delete()
+                add_notification_item(request, 'success', "You've successfully placed an order. Head to the orders page to view your order.", 'Admin')
             redirect("order")
                 
         return super().get(request, *args, **kwargs)
