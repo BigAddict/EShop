@@ -2,6 +2,7 @@ from typing import Any
 from django.views.generic import TemplateView
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import get_object_or_404, redirect
+from django.contrib import messages
 
 from .models import Product, Topping, Cart, CartItem, Order, OrderItem
 from ESmokies.utils import add_notification_item
@@ -53,6 +54,7 @@ class ProductTemplateView(TemplateView):
                 topping = get_object_or_404(Topping, pk=topping_id)
                 cart_item.toppings.add(topping)
         cart_item.save()
+        messages.success(request, f"{self.product.name} added to cart.")
             
         return redirect("index")
     
@@ -101,6 +103,7 @@ class CartTemplateView(TemplateView):
             if new_quantity:
                 cart_item.quantity = int(new_quantity)
             cart_item.save()
+            messages.success(request, "Cart updated!")
         
         # Handle cart item removal
         if request.POST.get('remove_item'):
@@ -108,6 +111,7 @@ class CartTemplateView(TemplateView):
             if item_id_to_remove:
                 item_to_remove = get_object_or_404(CartItem, id=item_id_to_remove)
                 item_to_remove.delete()
+                messages.info(request, f"{item_to_remove.product.name} removed from cart!")
                 
         # Handle order placement
         if request.POST.get("order_placed"):
@@ -137,6 +141,7 @@ class CartTemplateView(TemplateView):
                     order_item.toppings.add(topping)
                 order_item.save()
                 cart_item.delete()
+                messages.success(request, "You've successfully placed an order. Head to the orders page to view your order.")
                 add_notification_item(request, 'success', "You've successfully placed an order. Head to the orders page to view your order.", 'Admin')
             redirect("order")
                 

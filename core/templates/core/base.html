@@ -186,7 +186,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
+              <a class="dropdown-item d-flex align-items-center" href="{% url "contacts" %}">
                 <i class="bi bi-question-circle"></i>
                 <span>Need Help?</span>
               </a>
@@ -240,6 +240,13 @@
         <a href="{% url "order" %}" class="nav-link collapsed">
           <i class="bi bi-bag-fill"></i>
           <span>ORDERS</span>
+        </a>
+      </li>
+
+      <li class="nav-item">
+        <a href="{% url "contacts" %}" class="nav-link collapsed">
+          <i class="bi bi-telephone-fill"></i>
+          <span>CONTACT US</span>
         </a>
       </li>
       
