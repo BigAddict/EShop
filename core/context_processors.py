@@ -1,7 +1,7 @@
 from django.http import HttpRequest
 
 from .models import Cart, CartItem
-from ESmokies.utils import get_notification
+from EShop.utils import get_notification
 
 def custom_processor(request: HttpRequest) -> dict:
     context = {}

@@ -8,7 +8,7 @@ from  django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 
-from ESmokies.utils import add_notification_item
+from EShop.utils import add_notification_item
 from .models import NotificationItem, UserMessage
 
 class RegisterTemplateView(TemplateView):

@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib import messages
 
 from .models import Product, Topping, Cart, CartItem, Order, OrderItem
-from ESmokies.utils import add_notification_item
+from EShop.utils import add_notification_item
 
 class IndexTemplateView(TemplateView):
     template_name = "core/index.html"
